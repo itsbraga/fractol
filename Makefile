@@ -6,13 +6,13 @@
 
 RESET		:=	\e[0m
 BOLD		:=	\e[1m
-DIM		:=	\e[2m
+DIM			:=	\e[2m
 ITAL		:=	\e[3m
 UNDERLINE	:=	\e[4m
 
 BLACK		:=	\e[30m
 GRAY		:=	\e[90m
-RED		:=	\e[31m
+RED			:=	\e[31m
 GREEN		:=	\e[32m
 YELLOW		:=	\e[33m
 ORANGE		:=	\e[38;5;208m
@@ -24,9 +24,9 @@ CYAN		:=	\e[36m
 BRIGHT_BLACK	:=	\e[90m
 BRIGHT_GREEN	:=	\e[92m
 BRIGHT_YELLOW	:=	\e[93m
-BRIGHT_BLUE	:=	\e[94m
+BRIGHT_BLUE		:=	\e[94m
 BRIGHT_PURPLE	:=	\e[95m
-BRIGHT_CYAN	:=	\e[96m
+BRIGHT_CYAN		:=	\e[96m
 
 # define rainbow
 # $(shell echo $(1) | sed -e "s/./\$(shell printf '\033[38;5;%dm' \$$(shell expr \( \$$(od -An -N1 -tu1 /dev/urandom) \% 6 + 196))&) /g")
@@ -36,9 +36,9 @@ BRIGHT_CYAN	:=	\e[96m
 
 
 #################################################################################
-#										#
-#				    BASICS					#
-#										#
+#																				#
+#				    				BASICS										#
+#																				#
 #################################################################################
 
 NAME		=	fractol
@@ -47,46 +47,46 @@ NAME		=	fractol
 LIBFT_PATH	=	libft/
 MLX_PATH	=	minilibx-linux/
 
-CC		=	cc
+CC			=	cc
 
 MAKEFLAGS	+=	--no-print-directory
 MLXFLAGS	=	-lmlx -lXext -lX11
 DEPFLAGS	=	-MMD -MP
 CFLAGS		=	-Wall -Wextra -Werror -I
-INC		=	include/
+INC			=	include/
 
 DEBUG		=	-g -O0
-RM		=	rm -rf
+RM			=	rm -rf
 
 
 #################################################################################
-#										#
-#				    SOURCES					#
-#										#
+#																				#
+#				    				SOURCES										#
+#																				#
 #################################################################################
 
-FRACTAL_DIR	=	fractal_types/
+FRACTAL_DIR		=	fractal_types/
 FRACTAL_FILES	=	julia.c \
-			mandelbrot.c
+					mandelbrot.c
 
-UTILS_DIR	=	
-UTILS_FILES	=	
+UTILS_DIR		=	
+UTILS_FILES		=	
 
 # BONUS_FILES	=	
 
 
 #################################################################################
-#										#
-#				COMBINE FILES					#
-#				    and						#
-#				DIRECTORIES					#
-#									  	#
+#																				#
+#								COMBINE FILES									#
+#				    				and											#
+#								DIRECTORIES										#
+#									  											#
 #################################################################################
 
 SRC_DIR		=	src/
 
 SRCS		=	$(addprefix $(FRACTAL_DIR), $(FRACTAL_FILES)) \
-			$(addprefix $(UTILS_DIR), $(UTILS_FILES))
+				$(addprefix $(UTILS_DIR), $(UTILS_FILES))
 
 OBJ_DIR		=	obj/
 
@@ -102,57 +102,51 @@ OBJS		=	$(addprefix $(OBJ_DIR), $(OBJ_NAMES))
 
 # BONUS_SRC_DIR	=	bonus/
 
-# OBJ_B_DIR	=	obj_bonus/
+# OBJ_B_DIR		=	obj_bonus/
 
 
 #################################################################################
-#										#
-#				DEPENDENCIES					#
-#										#
+#																				#
+#								DEPENDENCIES									#
+#																				#
 #################################################################################
 
 DEP_NAMES	=	$(SRCS:.c=.d)
 
-DEP_FOLDERS	=	$(addprefix $(OBJ_DIR), $(FT_FD_DIR) \
-                		$(FT_IS_DIR) \
-				$(FT_MEM_DIR) \
-				$(FT_STR_DIR) \
-                   		$(FT_TO_DIR) \
-				$(FT_LST_DIR) \
-                		$(GNL_DIR) \
-				$(FT_PRINTF_DIR) \
-				$(FT_FROM_TO_DIR) \
-				$(INT_DIR) \
-				$(MATHS_DIR))
+DEP_FOLDERS	=	$(addprefix $(OBJ_DIR), $(FRACTAL_DIR) \
+                	$(UTILS_DIR))
 
 DEPS		=	$(addprefix $(OBJ_DIR), $(DEP_NAMES))
 
 
 #################################################################################
-#										#
-#				     RULES					#
-#										#
+#																				#
+#				     				RULES										#
+#																				#
 #################################################################################
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 			@mkdir -p $(dir $@)
 			@printf "$(BOLD)$(ITAL)$(PURPLE)Compiling: $(RESET)$(ITAL)$<         \r"
 			@$(CC) $(DEBUG) $(DEPFLAGS) $(CFLAGS) $(INC) -c $< -o $@
-
 -include $(DEPS)
 
 # links .o files to libraries, constructs the necessary dependencies and do ASCII art
 $(NAME): $(OBJS)
-		@printf "\t\t\t──▒▒▒▒▒▒───▄████▄\n"
-		@printf "\t\t\t─▒─▄▒─▄▒──███▄█▀\n"
-		@printf "\t\t\t─▒▒▒▒▒▒▒─▐████──█─█\n"
-		@printf "\t\t\t─▒▒▒▒▒▒▒──█████▄\n"
-		@printf "\t\t\t─▒─▒─▒─▒───▀████▀\n\n\n"
-		@make -sC $(MLX_PATH) $(MAKEFLAGS)
-		@make -sC $(LIBFT_PATH) $(MAKEFLAGS)
-		@$(CC) $(CFLAGS) $(INC) $(OBJS) libft.a $(MLX_PATH) $(MLXFLAGS) -o $(NAME)
-		@printf "\n$(BOLD)$(PINK). ⋅ ˚̣- : ✧ : – ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ₊° ˗ ˏ ˋ ♡ ˎˊ ˗ °₊ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ – : ✧ : -˚̣⋅ .$(RESET)\n\n\n"
-		@printf "$(BOLD)$(GREEN)[Mandatory]: Compilation done!$(RESET)\n\n"
+			@if [ ! -f .build ]; then \
+						printf "\t\t\t%s\n" \
+						"──▒▒▒▒▒▒───▄████▄" \
+						"─▒─▄▒─▄▒──███▄█▀" \
+						"─▒▒▒▒▒▒▒─▐████──█─█" \
+						"─▒▒▒▒▒▒▒──█████▄" \
+						"─▒─▒─▒─▒───▀████▀"; \
+						printf "\n\n"; \
+						touch .build; fi
+			@make -sC $(MLX_PATH) $(MAKEFLAGS)
+			@make -sC $(LIBFT_PATH) $(MAKEFLAGS)
+			@$(CC) $(CFLAGS) $(INC) $(OBJS) libft.a $(MLX_PATH) $(MLXFLAGS) -o $(NAME)
+			@printf "\n$(BOLD)$(PINK). ⋅ ˚̣- : ✧ : – ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ₊° ˗ ˏ ˋ ♡ ˎˊ ˗ °₊ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ – : ✧ : -˚̣⋅ .$(RESET)\n\n\n"
+			@printf "$(BOLD)$(GREEN)[Mandatory]: Compilation done!$(RESET)\n\n"
 
 # @printf "\n\n$(RESET)$(BOLD)$(BLUE)[FRACT-OL]:\t$(RESET)"
 # @printf "$(BLUE)./fractol ready to draw fractals $(RESET)🌈\n\n"
