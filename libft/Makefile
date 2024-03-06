@@ -6,7 +6,7 @@
 #    By: annabrag <annabrag@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/02 11:07:10 by annabrag          #+#    #+#              #
-#    Updated: 2024/03/06 01:02:45 by annabrag         ###   ########.fr        #
+#    Updated: 2024/03/06 05:32:44 by annabrag         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -193,18 +193,18 @@ $(NAME): $(OBJS)
 		@printf "\n\n$(RESET)$(BOLD)$(PINK)[LIBFT]$(RESET), \
 $(BOLD)$(BLUE)[GET_NEXT_LINE]$(RESET), $(BOLD)$(RED)[FT_PRINTF]$(RESET), \
 $(BOLD)$(ORANGE)[MATHS FUNC.]$(RESET) $(BOLD)$(YELLOW)successfully compiled!$(RESET)\n\n"
-		@printf "\n. ⋅ ˚̣- : ✧ : – ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ₊° ˗ ˏ ˋ ♡ ˎˊ ˗ °₊ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ – : ✧ : -˚̣⋅ .\n\n\n\n"
+		@printf "\n. ⋅ ˚̣- : ✧ : – ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ₊° ˗ ˏ ˋ ♡ ˎˊ ˗ °₊ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ – : ✧ : -˚̣⋅ .\n\n\n"
 
 san:	$(FSANITIZE)
 
 clean:
 		@$(RM) $(OBJ_DIR)
-		@printf "\n$(BOLD)$(PINK)[LIBFT, GNL, FT_PRINTF, MATHS FUNC.]:\t$(RESET)Clean completed!\n"
+		@printf "\n$(BOLD)$(PINK)[LIBFT & co.]:\t$(RESET)Clean completed!\n"
 
 fclean: clean
 		@$(RM) $(NAME)
 		@find . -name ".DS_Store" -delete
-		@printf "$(BOLD)$(PINK)[LIBFT, GNL, FT_PRINTF, MATHS FUNC.]:\t$(RESET)Full clean completed!\n\n"
+		@printf "$(BOLD)$(PINK)[LIBFT & co.]:\t$(RESET)Full clean completed!\n\n"
 		@printf "\n. ⋅ ˚̣- : ✧ : – ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ₊° ˗ ˏ ˋ ♡ ˎˊ ˗ °₊ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ – : ✧ : -˚̣⋅ .\n\n"
 
 re:	fclean all

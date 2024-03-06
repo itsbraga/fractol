@@ -45,17 +45,17 @@ NAME		=	fractol
 # NAME_BONUS	=	fractol_bonus
 
 LIBFT_PATH	=	libft/
+LIBFT_X		=	$(addprefix $(LIBFT_PATH), libft.a)
 MLX_PATH	=	minilibx-linux/
+MLX_X		=	$(addprefix $(MLX_PATH), libmlx.a)
 
 CC			=	cc
 
 MAKEFLAGS	+=	--no-print-directory
-MLXFLAGS	=	-lmlx -lXext -lX11
+MLXFLAGS	=	-Lminilibx-linux -lX11 -lXext
 DEPFLAGS	=	-MMD -MP
-CFLAGS		=	-Wall -Wextra -Werror -I
-INC			=	include/
+CFLAGS		=	-Wall -Wextra -Werror
 
-DEBUG		=	-g -O0
 RM			=	rm -rf
 
 
@@ -65,12 +65,14 @@ RM			=	rm -rf
 #																				#
 #################################################################################
 
-FRACTAL_DIR		=	fractal_types/
-FRACTAL_FILES	=	julia.c \
-					mandelbrot.c
+FRACTAL_DIR		=	fractals/
+FRACTAL_FILES	=	mandelbrot.c julia.c
 
-UTILS_DIR		=	
-UTILS_FILES		=	
+PARSING_DIR		=	parsing/
+PARSING_FILES	=	check_args.c
+
+EXEC_DIR		=	exec/
+EXEC_FILES		=	main.c
 
 # BONUS_FILES	=	
 
@@ -86,14 +88,14 @@ UTILS_FILES		=
 SRC_DIR		=	src/
 
 SRCS		=	$(addprefix $(FRACTAL_DIR), $(FRACTAL_FILES)) \
-				$(addprefix $(UTILS_DIR), $(UTILS_FILES))
+				$(addprefix $(PARSING_DIR), $(PARSING_FILES)) \
+				$(addprefix $(EXEC_DIR), $(EXEC_FILES))
 
 OBJ_DIR		=	obj/
 
 OBJ_NAMES	=	$(SRCS:.c=.o)
 
-OBJ_DIRS	=	$(addprefix $(OBJ_DIR), $(FRACTAL_DIR) \
-            		$(UTILS_DIR))
+OBJ_DIRS	=	$(addprefix $(OBJ_DIR), $(FRACTAL_DIR), $(PARSING_DIR), $(EXEC_DIR))
 
 OBJS		=	$(addprefix $(OBJ_DIR), $(OBJ_NAMES))
 
@@ -113,8 +115,7 @@ OBJS		=	$(addprefix $(OBJ_DIR), $(OBJ_NAMES))
 
 DEP_NAMES	=	$(SRCS:.c=.d)
 
-DEP_DIRS	=	$(addprefix $(OBJ_DIR), $(FRACTAL_DIR) \
-                	$(UTILS_DIR))
+DEP_DIRS	=	$(addprefix $(OBJ_DIR), $(FRACTAL_DIR), $(PARSING_DIR), $(EXEC_DIR))
 
 DEPS		=	$(addprefix $(OBJ_DIR), $(DEP_NAMES))
 
@@ -128,28 +129,39 @@ DEPS		=	$(addprefix $(OBJ_DIR), $(DEP_NAMES))
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 				@mkdir -p $(dir $@)
 				@printf "$(BOLD)$(ITAL)$(PURPLE)Compiling: $(RESET)$(ITAL)$<          \r"
-				@$(CC) $(DEBUG) $(DEPFLAGS) $(CFLAGS) $(INC) -c $< -o $@
+				@$(CC) $(DEPFLAGS) $(CFLAGS) -c $< -o $@
 -include $(DEPS)
 
 # links .o files to libraries, constructs the necessary dependencies and do ASCII art
 $(NAME): $(OBJS)
-			@if [ ! -f .build ]; then \
-						printf "\t\t\t%s\n" \
-						"──▒▒▒▒▒▒───▄████▄" \
-						"─▒─▄▒─▄▒──███▄█▀" \
-						"─▒▒▒▒▒▒▒─▐████──█─█" \
-						"─▒▒▒▒▒▒▒──█████▄" \
-						"─▒─▒─▒─▒───▀████▀"; \
-						printf "\n\n"; \
-						touch .build; fi
 			@make -sC $(MLX_PATH) $(MAKEFLAGS)
+			@printf "\n\n. ⋅ ˚̣- : ✧ : – ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ₊° ˗ ˏ ˋ ♡ ˎˊ ˗ °₊ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ – : ✧ : -˚̣⋅ .\n\n"
 			@make -sC $(LIBFT_PATH) $(MAKEFLAGS)
-			@$(CC) $(CFLAGS) $(INC) $(OBJS) libft.a $(MLX_PATH) $(MLXFLAGS) -o $(NAME)
-			@printf "\n$(BOLD)$(PINK). ⋅ ˚̣- : ✧ : – ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ₊° ˗ ˏ ˋ ♡ ˎˊ ˗ °₊ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ – : ✧ : -˚̣⋅ .$(RESET)\n\n\n"
-			@printf "$(BOLD)$(GREEN)[Mandatory]: Compilation done!$(RESET)\n\n"
-
-# @printf "\n\n$(RESET)$(BOLD)$(BLUE)[FRACT-OL]:\t$(RESET)"
-# @printf "$(BLUE)./fractol ready to draw fractals $(RESET)🌈\n\n"
+			@printf "\n"
+			@if [ ! -f .build ]; then \
+				printf "\t\t%s\n" \
+				"░░░░░░░░░░░░░░░▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄░░░░░░░░░░░░░░" \
+				"░░░░░░░░▄▄▄▄█▀▀▀░░░░░░░░░░░░▀▀██░░░░░░░░░░░░" \
+				"░░░░░▄███▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█▄▄▄░░░░░░░░" \
+				"░░░▄▀▀░█░░░░▀█▄▀▄▀██████░▀█▄▀▄▀████▀░░░░░░░░" \
+				"░░░█░░░█░░░░░░▀█▄█▄███▀░░░░▀▀▀▀▀▀▀░▀▀▄░░░░░░" \
+				"░░░█░░░█░▄▄▄░░░░░░░░░░░░░░░░░░░░░▀▀░░░█░░░░░" \
+				"░░░█░░░▀█░░█░░░░▄░░░░▄░░░░░▀███▀░░░░░░░█░░░░" \
+				"░░░█░░░░█░░▀▄░░░░░░▄░░░░░░░░░█░░░░░░░░█▀▄░░░" \
+				"░░░░▀▄▄▀░░░░░▀▀▄▄▄░░░░░░░▄▄▄▀░▀▄▄▄▄▄▀▀░░█░░░" \
+				"░░░░█▄░░░░░░░░░░░░▀▀▀▀▀▀▀░░░░░░░░░░░░░░█░░░░" \
+				"░░░░░█░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▄██░░░░░" \
+				"░░░░░▀█▄░░░░░░░░░░░░░░░░░░░░░░░░░▄▀▀░░░▀█░░░" \
+				"█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█" \
+				"█░░█▀▄ █▀▀ █▀█ █░░░░█░▄░█ █ ▀█▀ █░█░░█ ▀█▀░█" \
+				"█░░█░█ █▀▀ █▀█ █░░░░▀▄▀▄▀ █ ░█░ █▀█░░█ ░█░░█" \
+				"█░░▀▀░ ▀▀▀ ▀░▀ ▀▀▀░░░▀░▀░ ▀ ░▀░ ▀░▀░░▀ ░▀░░█" \
+				"▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀"; \
+				printf "\n\n"; \
+				touch .build; fi
+			@$(CC) $(CFLAGS) $(OBJS) -I $(LIBFT_X) -I $(MLX_X) $(MLXFLAGS) -o $(NAME)
+			@printf "$(BOLD)$(CYAN)[Mandatory]:\t$(RESET)$(BOLD)Compilation done! *** "
+			@printf "$(RESET)$(PINK)You can now generate fractals 🌈\n\n"
 
 all:	$(NAME)
 
@@ -157,18 +169,18 @@ clean:
 		@$(RM) $(OBJ_DIR)
 		@make clean -sC $(MLX_PATH) $(MAKEFLAGS)
 		@make clean -sC $(LIBFT_PATH) $(MAKEFLAGS)
-		@printf "\n$(BOLD)$(PINK)Clean completed\n"
+		@printf "\n$(BOLD)$(GREEN)[objs]:\t\t$(RESET)Clean completed\n"
 
 fclean: clean
 			@$(RM) $(NAME)
-			@$(RM) $(MLX_PATH)/libmlx $(LIBFT_PATH)/libft.a
-			@$(RM) libmlx libft.a
+			@$(RM) $(MLX_X) $(LIBFT_X)
+			@find . -name ".build" -delete
 			@find . -name ".DS_Store" -delete
-			@printf "$(BOLD)$(BLUE)[All]:\t$(RESET)Full clean completed!\n\n"
+			@printf "$(BOLD)$(BLUE)[execs]:\t$(RESET)Full clean completed!\n\n"
 			@printf "\n. ⋅ ˚̣- : ✧ : – ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ₊° ˗ ˏ ˋ ♡ ˎˊ ˗ °₊ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ – : ✧ : -˚̣⋅ .\n\n\n"
 
 re:		fclean all
-			@printf "\n\n✨ $(BOLD)$(YELLOW)Cleaning and rebuilding done! $(RESET)✨\n"
+			@printf "\n\n✨ $(BOLD)$(YELLOW)Cleaning and rebuilding done! $(RESET)✨\n\n"
 
 diff:
 		$(info Repository's status, and the volume of per-file changes:)
@@ -178,7 +190,7 @@ diff:
 
 norm:
 		@clear
-		@norminette $(SRC_DIR) $(INC) $(LIBFT_PATH) | grep -v Norme -B1 || true
+		@norminette $(SRC_DIR) $(LIBFT_PATH) | grep -v Norme -B1 || true
 
 
 #################################################################################
@@ -203,7 +215,7 @@ norm:
 # 		@make -sC $(MLX_PATH) $(MAKEFLAGS)
 # 		@make -sC $(LIBFT_PATH) $(MAKEFLAGS)
 # 		@cp $(MLX_PATH)/libmlx.a .
-# 		@cp $(LIBFT_PATH)/libft.a .
+# 		@cp $(LIBFT) .
 #		@make $(NAME_BONUS)
 # 		@printf "\n\n✨ $(BOLD)$(YELLOW)Bonuses successfully compiled! $(RESET)✨\n"
 
