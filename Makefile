@@ -1,7 +1,7 @@
 #################################################################################
-#										#
-#				      COLORS					#
-#										#
+#																				#
+#				      				COLORS										#
+#																				#
 #################################################################################
 
 RESET		:=	\e[0m
@@ -92,7 +92,7 @@ OBJ_DIR		=	obj/
 
 OBJ_NAMES	=	$(SRCS:.c=.o)
 
-OBJ_FOLDERS	=	$(addprefix $(OBJ_DIR), $(FRACTAL_DIR) \
+OBJ_DIRS	=	$(addprefix $(OBJ_DIR), $(FRACTAL_DIR) \
             		$(UTILS_DIR))
 
 OBJS		=	$(addprefix $(OBJ_DIR), $(OBJ_NAMES))
@@ -113,7 +113,7 @@ OBJS		=	$(addprefix $(OBJ_DIR), $(OBJ_NAMES))
 
 DEP_NAMES	=	$(SRCS:.c=.d)
 
-DEP_FOLDERS	=	$(addprefix $(OBJ_DIR), $(FRACTAL_DIR) \
+DEP_DIRS	=	$(addprefix $(OBJ_DIR), $(FRACTAL_DIR) \
                 	$(UTILS_DIR))
 
 DEPS		=	$(addprefix $(OBJ_DIR), $(DEP_NAMES))
@@ -126,9 +126,9 @@ DEPS		=	$(addprefix $(OBJ_DIR), $(DEP_NAMES))
 #################################################################################
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
-			@mkdir -p $(dir $@)
-			@printf "$(BOLD)$(ITAL)$(PURPLE)Compiling: $(RESET)$(ITAL)$<         \r"
-			@$(CC) $(DEBUG) $(DEPFLAGS) $(CFLAGS) $(INC) -c $< -o $@
+				@mkdir -p $(dir $@)
+				@printf "$(BOLD)$(ITAL)$(PURPLE)Compiling: $(RESET)$(ITAL)$<          \r"
+				@$(CC) $(DEBUG) $(DEPFLAGS) $(CFLAGS) $(INC) -c $< -o $@
 -include $(DEPS)
 
 # links .o files to libraries, constructs the necessary dependencies and do ASCII art
@@ -160,15 +160,15 @@ clean:
 		@printf "\n$(BOLD)$(PINK)Clean completed\n"
 
 fclean: clean
-		@$(RM) $(NAME)
-		@$(RM) $(MLX_PATH)/libmlx $(LIBFT_PATH)/libft.a
-		@$(RM) libmlx libft.a
-		@find . -name ".DS_Store" -delete
-		@printf "$(BOLD)$(BLUE)[All]:\t$(RESET)Full clean completed!\n\n"
-		@printf "\n. ⋅ ˚̣- : ✧ : – ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ₊° ˗ ˏ ˋ ♡ ˎˊ ˗ °₊ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ – : ✧ : -˚̣⋅ .\n\n\n"
+			@$(RM) $(NAME)
+			@$(RM) $(MLX_PATH)/libmlx $(LIBFT_PATH)/libft.a
+			@$(RM) libmlx libft.a
+			@find . -name ".DS_Store" -delete
+			@printf "$(BOLD)$(BLUE)[All]:\t$(RESET)Full clean completed!\n\n"
+			@printf "\n. ⋅ ˚̣- : ✧ : – ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ₊° ˗ ˏ ˋ ♡ ˎˊ ˗ °₊ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ – : ✧ : -˚̣⋅ .\n\n\n"
 
-re:	fclean all
-		@printf "\n\n✨ $(BOLD)$(YELLOW)Cleaning and rebuilding done! $(RESET)✨\n"
+re:		fclean all
+			@printf "\n\n✨ $(BOLD)$(YELLOW)Cleaning and rebuilding done! $(RESET)✨\n"
 
 diff:
 		$(info Repository's status, and the volume of per-file changes:)
@@ -182,9 +182,9 @@ norm:
 
 
 #################################################################################
-#										#
-#				     BONUS					#
-#										#
+#																				#
+#				     				BONUS										#
+#																				#
 #################################################################################
 
 # $(NAME_BONUS): $(OBJS_BONUS)
@@ -206,5 +206,6 @@ norm:
 # 		@cp $(LIBFT_PATH)/libft.a .
 #		@make $(NAME_BONUS)
 # 		@printf "\n\n✨ $(BOLD)$(YELLOW)Bonuses successfully compiled! $(RESET)✨\n"
+
 
 .PHONY:		build all clean fclean re diff norm
