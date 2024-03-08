@@ -6,7 +6,7 @@
 #    By: annabrag <annabrag@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/02 11:07:10 by annabrag          #+#    #+#              #
-#    Updated: 2024/03/06 05:32:44 by annabrag         ###   ########.fr        #
+#    Updated: 2024/03/08 15:38:49 by annabrag         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -183,28 +183,27 @@ $(info )
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 			@mkdir -p $(dir $@)
-			@printf "$(BOLD)$(ITAL)$(PURPLE)Compiling: $(RESET)$(ITAL)$<                                  \r"
+			@printf "$(BOLD)$(PURPLE)Compiling: $(RESET)$(ITAL)$<                                  \r"
 			@$(CC) $(DEPFLAGS) $(CFLAGS) $(INC) -c $< -o $@
 -include $(DEP)
 
 # link .o files to the library
 $(NAME): $(OBJS)
 		@$(LIBC) $(NAME) $(OBJS)
-		@printf "\n\n$(RESET)$(BOLD)$(PINK)[LIBFT]$(RESET), \
-$(BOLD)$(BLUE)[GET_NEXT_LINE]$(RESET), $(BOLD)$(RED)[FT_PRINTF]$(RESET), \
-$(BOLD)$(ORANGE)[MATHS FUNC.]$(RESET) $(BOLD)$(YELLOW)successfully compiled!$(RESET)\n\n"
-		@printf "\n. ⋅ ˚̣- : ✧ : – ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ₊° ˗ ˏ ˋ ♡ ˎˊ ˗ °₊ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ – : ✧ : -˚̣⋅ .\n\n\n"
+		@printf "\n\n$(BOLD)$(shell bash rainbow.sh "[LIBFT, GNL, FT_PRINTF]") "
+		@printf "$(RESET)$(BOLD)$(YELLOW)have been successfully compiled!\n\n"
+		@printf "$(RESET)\n. ⋅ ˚̣- : ✧ : – ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ₊° ˗ ˏ ˋ ♡ ˎˊ ˗ °₊ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ – : ✧ : -˚̣⋅ .\n\n\n"
 
 san:	$(FSANITIZE)
 
 clean:
 		@$(RM) $(OBJ_DIR)
-		@printf "\n$(BOLD)$(PINK)[LIBFT & co.]:\t$(RESET)Clean completed!\n"
+		@printf "\n$(BOLD)$(PINK)[LIBFT, GNL, FT_PRINTF]: $(RESET)Clean completed!\n"
 
 fclean: clean
 		@$(RM) $(NAME)
 		@find . -name ".DS_Store" -delete
-		@printf "$(BOLD)$(PINK)[LIBFT & co.]:\t$(RESET)Full clean completed!\n\n"
+		@printf "$(BOLD)$(PINK)[LIBFT, GNL, FT_PRINTF]: $(RESET)Full clean completed!\n\n"
 		@printf "\n. ⋅ ˚̣- : ✧ : – ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ₊° ˗ ˏ ˋ ♡ ˎˊ ˗ °₊ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ – : ✧ : -˚̣⋅ .\n\n"
 
 re:	fclean all

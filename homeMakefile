@@ -10,15 +10,22 @@ DIM			:=	\e[2m
 ITAL		:=	\e[3m
 UNDERLINE	:=	\e[4m
 
+BLACK		:=	\e[30m
+GRAY		:=	\e[90m
 RED			:=	\e[31m
-ORANGE		:=	\e[38;5;208m
-YELLOW		:=	\e[33m
 GREEN		:=	\e[32m
-CYAN		:=	\e[36m
+YELLOW		:=	\e[33m
+ORANGE		:=	\e[38;5;208m
 BLUE		:=	\e[34m
-INDIGO		:=	\e[34;45m
 PURPLE		:=	\e[35m
-PINK		:=	\e[38;2;255;182;193m
+PINK		:=	\033[38;2;255;182;193m
+CYAN		:=	\e[36m
+
+# define rainbow
+# $(shell echo $(1) | sed -e "s/./\$(shell printf '\033[38;5;%dm' \$$(shell expr \( \$$(od -An -N1 -tu1 /dev/urandom) \% 6 + 196))&) /g")
+# endef
+
+# COLORED_TEXT	:= $(call (rainbow))
 
 
 #################################################################################
@@ -112,16 +119,26 @@ DEPS		=	$(addprefix $(OBJ_DIR), $(DEP_NAMES))
 #																				#
 #################################################################################
 
-build:
-		@make -sC $(MLX_PATH) $(MAKEFLAGS)
-		@printf "\n\n. ⋅ ˚̣- : ✧ : – ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ₊° ˗ ˏ ˋ ♡ ˎˊ ˗ °₊ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ – : ✧ : -˚̣⋅ .\n\n"
-		@make -sC $(LIBFT_PATH) $(MAKEFLAGS)
-		@make all
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+				@mkdir -p $(dir $@)
+				@printf "$(BOLD)$(ITAL)$(PURPLE)Compiling: $(RESET)$(ITAL)$<          \r"
+				@$(CC) $(DEPFLAGS) $(CFLAGS) -I/usr/include -Iminilibx-linux -c $< -o $@
+-include $(DEPS)
+
+# TOTAL_FILES := $(words $(SRCS))
+# COMPILED_FILES := 0
+
+# $(OBJ_DIR)%.o: $(SRC_DIR)%.c
+# 				@mkdir -p $(dir $@)
+# 				@$(CC) $(DEPFLAGS) $(CFLAGS) -I/usr/include -Iminilibx-linux -c $< -o $@
+# 				$(eval COMPILED_FILES := $(shell echo $$(($(COMPILED_FILES)+1))))
+# 				@bash progress.sh $(TOTAL_FILES) $(COMPILED_FILES)
+# -include $(DEPS)
 
 $(NAME): $(OBJS)
-			@printf "\n\n"
-			@printf "$(RESET)$(shell bash rainbow.sh "[Fractol mandatory]"): "
-			@printf "$(RESET)$(BOLD)$(PINK)Compilation done!\n\n$(RESET)"
+			@make -sC $(MLX_PATH) $(MAKEFLAGS)
+			@printf "\n\n. ⋅ ˚̣- : ✧ : – ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ₊° ˗ ˏ ˋ ♡ ˎˊ ˗ °₊ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ – : ✧ : -˚̣⋅ .\n\n"
+			@make -sC $(LIBFT_PATH) $(MAKEFLAGS)
 			@if [ ! -f .build ]; then \
 				printf "\t\t%s\n" \
 				"░░░░░░░░░░░░░░░▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄░░░░░░░░░░░░░░" \
@@ -143,24 +160,9 @@ $(NAME): $(OBJS)
 				"▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀"; \
 				printf "\n\n"; \
 				touch .build; fi
-			@$(CC) $(CFLAGS) $(OBJS) -I $(LIBFT_X) -I $(MLX_X) $(MLXFLAGS) -o $(NAME)
-			@printf "$(RESET)$(shell bash rainbow.sh "You can now generate fractals") 🌈\n\n"
-
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c
-				@mkdir -p $(dir $@)
-				@printf "$(BOLD)$(ITAL)$(PURPLE)Compiling: $(RESET)$(ITAL)$<          \r"
-				@$(CC) $(DEPFLAGS) $(CFLAGS) -c $< -o $@
--include $(DEPS)
-
-# TOTAL_FILES := $(words $(SRCS))
-# COMPILED_FILES := 0
-
-# $(OBJ_DIR)%.o: $(SRC_DIR)%.c
-# 				@mkdir -p $(dir $@)
-# 				@$(CC) $(DEPFLAGS) $(CFLAGS) -I/usr/include -Iminilibx-linux -c $< -o $@
-# 				$(eval COMPILED_FILES := $(shell echo $$(($(COMPILED_FILES)+1))))
-# 				@bash progress.sh $(TOTAL_FILES) $(COMPILED_FILES)
-# -include $(DEPS)
+			@$(CC) $(CFLAGS) $(OBJS) -I $(LIBFT_X) -I $(MLX_X) $(MLXFLAGS) -L/usr/lib -o $(NAME)
+			@printf "$(BOLD)$(CYAN)[Mandatory]:\t$(RESET)$(BOLD)Compilation done! *** "
+			@printf "$(RESET)$(PINK)You can now generate fractals 🌈\n\n"
 
 all:	$(NAME)
 
@@ -168,14 +170,14 @@ clean:
 		@$(RM) $(OBJ_DIR)
 		@make clean -sC $(MLX_PATH) $(MAKEFLAGS)
 		@make clean -sC $(LIBFT_PATH) $(MAKEFLAGS)
-		@printf "\n$(BOLD)$(GREEN)[objs]:\t $(RESET)Clean completed\n"
+		@printf "\n$(BOLD)$(GREEN)[objs]:\t\t$(RESET)Clean completed\n"
 
 fclean: clean
 			@$(RM) $(NAME)
 			@$(RM) $(MLX_X) $(LIBFT_X)
 			@find . -name ".build" -delete
 			@find . -name ".DS_Store" -delete
-			@printf "$(BOLD)$(BLUE)[execs]: $(RESET)Full clean completed!\n\n"
+			@printf "$(BOLD)$(BLUE)[execs]:\t$(RESET)Full clean completed!\n\n"
 			@printf "\n. ⋅ ˚̣- : ✧ : – ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ₊° ˗ ˏ ˋ ♡ ˎˊ ˗ °₊ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ – : ✧ : -˚̣⋅ .\n\n\n"
 
 re:		fclean all
