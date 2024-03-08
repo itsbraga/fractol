@@ -51,10 +51,10 @@ MLX_X		=	$(addprefix $(MLX_PATH), libmlx.a)
 
 CC			=	cc
 
-MAKEFLAGS	+=	--no-print-directory
+CFLAGS		=	-Wall -Wextra -Werror
 MLXFLAGS	=	-Lminilibx-linux -lX11 -lXext
 DEPFLAGS	=	-MMD -MP
-CFLAGS		=	-Wall -Wextra -Werror
+MAKEFLAGS	+=	--no-print-directory
 
 RM			=	rm -rf
 
@@ -129,15 +129,23 @@ DEPS		=	$(addprefix $(OBJ_DIR), $(DEP_NAMES))
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 				@mkdir -p $(dir $@)
 				@printf "$(BOLD)$(ITAL)$(PURPLE)Compiling: $(RESET)$(ITAL)$<          \r"
-				@$(CC) $(DEPFLAGS) $(CFLAGS) -c $< -o $@
+				@$(CC) $(DEPFLAGS) $(CFLAGS) -I/usr/include -Iminilibx-linux -c $< -o $@
 -include $(DEPS)
 
-# links .o files to libraries, constructs the necessary dependencies and do ASCII art
+# TOTAL_FILES := $(words $(SRCS))
+# COMPILED_FILES := 0
+
+# $(OBJ_DIR)%.o: $(SRC_DIR)%.c
+# 				@mkdir -p $(dir $@)
+# 				@$(CC) $(DEPFLAGS) $(CFLAGS) -I/usr/include -Iminilibx-linux -c $< -o $@
+# 				$(eval COMPILED_FILES := $(shell echo $$(($(COMPILED_FILES)+1))))
+# 				@bash progress.sh $(TOTAL_FILES) $(COMPILED_FILES)
+# -include $(DEPS)
+
 $(NAME): $(OBJS)
 			@make -sC $(MLX_PATH) $(MAKEFLAGS)
 			@printf "\n\n. ⋅ ˚̣- : ✧ : – ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ₊° ˗ ˏ ˋ ♡ ˎˊ ˗ °₊ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ – : ✧ : -˚̣⋅ .\n\n"
 			@make -sC $(LIBFT_PATH) $(MAKEFLAGS)
-			@printf "\n"
 			@if [ ! -f .build ]; then \
 				printf "\t\t%s\n" \
 				"░░░░░░░░░░░░░░░▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄░░░░░░░░░░░░░░" \
@@ -159,7 +167,7 @@ $(NAME): $(OBJS)
 				"▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀"; \
 				printf "\n\n"; \
 				touch .build; fi
-			@$(CC) $(CFLAGS) $(OBJS) -I $(LIBFT_X) -I $(MLX_X) $(MLXFLAGS) -o $(NAME)
+			@$(CC) $(CFLAGS) $(OBJS) -I $(LIBFT_X) -I $(MLX_X) $(MLXFLAGS) -L/usr/lib -o $(NAME)
 			@printf "$(BOLD)$(CYAN)[Mandatory]:\t$(RESET)$(BOLD)Compilation done! *** "
 			@printf "$(RESET)$(PINK)You can now generate fractals 🌈\n\n"
 

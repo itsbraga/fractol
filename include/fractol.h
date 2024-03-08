@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fractol.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: annabrag <annabrag@student.42.fr>          +#+  +:+       +#+        */
+/*   By: art3mis <art3mis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 16:15:48 by annabrag          #+#    #+#             */
-/*   Updated: 2024/03/06 04:45:19 by annabrag         ###   ########.fr       */
+/*   Updated: 2024/03/08 00:52:11 by art3mis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,28 @@
 # include <math.h>
 # include <stdbool.h>
 
+/* Endianness is represented in two ways : Big-endian (BE) and Little-endian (LE)
+ * 
+ * BE stores the big-end first (reading left->right)
+ * LE stores the little-end first (reading right->left)
+ * 
+ * The byte holding the smallest position is the Least Significant Byte (LSbyte)
+ * 					the most significant position is the Most Significant Byte (MSbyte)
+ * The bit holding the smallest position is the Least Significant Bit (LSbit)
+ * 				   the most significant bit position is the Most Significant Bit (MSbit)
+ * 
+ * so...
+ * BE stores data MSbyte first
+ * LE stores data MSbyte last
+*/
+
 typedef	struct	s_data
 {
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
+	int		endian;
 }				t_data;
 
 #endif
