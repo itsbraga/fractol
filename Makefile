@@ -58,7 +58,7 @@ PARSING_DIR		=	parsing/
 PARSING_FILES	=	check_args.c
 
 EXEC_DIR		=	exec/
-EXEC_FILES		=	main.c
+EXEC_FILES		=	init.c fractal.c main.c
 
 # BONUS_FILES	=	
 
@@ -120,7 +120,7 @@ build:
 
 $(NAME): $(OBJS)
 			@printf "\n\n"
-			@printf "$(RESET)$(shell bash rainbow.sh "[Fractol mandatory]"): "
+			@printf "$(RESET)$(shell bash rainbow.sh "[FRACT-OL Mandatory]"): "
 			@printf "$(RESET)$(BOLD)$(PINK)Compilation done!\n\n$(RESET)"
 			@if [ ! -f .build ]; then \
 				printf "\t\t%s\n" \
@@ -144,23 +144,15 @@ $(NAME): $(OBJS)
 				printf "\n\n"; \
 				touch .build; fi
 			@$(CC) $(CFLAGS) $(OBJS) -I $(LIBFT_X) -I $(MLX_X) $(MLXFLAGS) -o $(NAME)
+#			@$(CC) $(CFLAGS) $(OBJS) -I $(LIBFT_X) -I $(MLX_X) $(MLXFLAGS) -L/usr/lib -o $(NAME)
 			@printf "$(RESET)$(shell bash rainbow.sh "You can now generate fractals") 🌈\n\n"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 				@mkdir -p $(dir $@)
 				@printf "$(BOLD)$(ITAL)$(PURPLE)Compiling: $(RESET)$(ITAL)$<          \r"
 				@$(CC) $(DEPFLAGS) $(CFLAGS) -c $< -o $@
+#				@$(CC) $(DEPFLAGS) $(CFLAGS) -I/usr/include -Iminilibx-linux -c $< -o $@
 -include $(DEPS)
-
-# TOTAL_FILES := $(words $(SRCS))
-# COMPILED_FILES := 0
-
-# $(OBJ_DIR)%.o: $(SRC_DIR)%.c
-# 				@mkdir -p $(dir $@)
-# 				@$(CC) $(DEPFLAGS) $(CFLAGS) -I/usr/include -Iminilibx-linux -c $< -o $@
-# 				$(eval COMPILED_FILES := $(shell echo $$(($(COMPILED_FILES)+1))))
-# 				@bash progress.sh $(TOTAL_FILES) $(COMPILED_FILES)
-# -include $(DEPS)
 
 all:	$(NAME)
 
