@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: art3mis <art3mis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: annabrag <annabrag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 18:50:28 by annabrag          #+#    #+#             */
-/*   Updated: 2024/03/11 23:35:59 by art3mis          ###   ########.fr       */
+/*   Updated: 2024/03/12 19:02:12 by annabrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,49 @@ static bool have_duplicates(char *s)
 		i++;
 	}
 	return (true);
+}
+
+static double	atod_part2(char *s, int i)
+{
+	int		j;
+	double	second;
+
+	j = 1;
+	second = 0;
+	while (s[i] && (s[i] >= 48 && s[i] <= 57))
+	{
+		j /= 10;
+		second = second * 10 + (s[i] - 48) * j;
+		i++;
+	}
+	return (second);
+}
+
+double	atod(char *s)
+{
+	int		i;
+	int		sign;
+	double	first;
+	double	second;
+
+	i = 0;
+	sign = 1;
+	first = 0;
+	while (s[i] && s[i] == 32 || (s[i] >= 9 && s[i] <= 13))
+		i++;
+	if (s[i] == '-' || s[i] == '+')
+	{
+		if (s[i] == '-')
+			sign *= -1;
+		i++;
+	}
+	while (s[i] && (s[i] >= 48 && s[i] <= 57))
+	{
+		first = first * 10 + (s[i] - 48);
+		i++;
+	}
+	if (s[i] == '.' || s[i] == ',')
+		i++;
+	second = atod_part2(s, i);
+	return (sign * (first + second));
 }

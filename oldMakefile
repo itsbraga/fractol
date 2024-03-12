@@ -55,10 +55,10 @@ CONFIGS_DIR		=	configs/
 CONFIGS_FILES	=	pixels.c mlx_handler.c
 
 EXEC_DIR		=	exec/
-EXEC_FILES		=	check_args.c init.c main.c
+EXEC_FILES		=	check_args.c init.c fractal.c main.c
 
 FRACTAL_DIR		=	fractals/
-FRACTAL_FILES	=	mandelbrot.c julia.c formula.c
+FRACTAL_FILES	=	mandelbrot.c julia.c maths.c
 
 # BONUS_FILES	=	
 
@@ -112,6 +112,8 @@ DEPS		=	$(addprefix $(OBJ_DIR), $(DEP_NAMES))
 #																				#
 #################################################################################
 
+all:	$(NAME)
+
 build:
 		@make -sC $(MLX_PATH) $(MAKEFLAGS)
 		@printf "\n\n. ⋅ ˚̣- : ✧ : – ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ₊° ˗ ˏ ˋ ♡ ˎˊ ˗ °₊ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ – : ✧ : -˚̣⋅ .\n\n"
@@ -143,16 +145,14 @@ $(NAME): $(OBJS)
 				"▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀"; \
 				printf "\n\n"; \
 				touch .build; fi
-			@$(CC) $(CFLAGS) $(OBJS) -I $(LIBFT_X) -I $(MLX_X) $(MLXFLAGS) -o $(NAME)
+			@$(CC) $(CFLAGS) $(OBJS) -I $(LIBFT_X) -I $(MLX_X) $(MLXFLAGS) -L/usr/lib -o $(NAME)
 			@printf "$(RESET)$(shell bash rainbow.sh "You can now generate fractals") 🌈\n\n"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 				@mkdir -p $(dir $@)
 				@printf "$(BOLD)$(ITAL)$(PURPLE)Compiling: $(RESET)$(ITAL)$<          \r"
-				@$(CC) $(DEPFLAGS) $(CFLAGS) -c $< -o $@
+				@$(CC) $(DEPFLAGS) $(CFLAGS) -I/usr/include -Iminilibx-linux -c $< -o $@
 -include $(DEPS)
-
-all:	$(NAME)
 
 clean:
 		@$(RM) $(OBJ_DIR)

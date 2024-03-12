@@ -1,19 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   pixels.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: annabrag <annabrag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/06 05:12:58 by annabrag          #+#    #+#             */
-/*   Updated: 2024/03/12 18:15:07 by annabrag         ###   ########.fr       */
+/*   Created: 2024/03/12 17:55:00 by annabrag          #+#    #+#             */
+/*   Updated: 2024/03/12 17:57:29 by annabrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/fractol.h"
 
-int	main(int argc, char **argv)
+void    pixel_put(t_img *img, t_fdata *fractal, int color)
 {
-	(void)argc;
-	(void)argv;
+	char	*dest;
+
+	dest = img->addr + (fractal->y * img->line_length + fractal->x 
+            * (img->bits_per_pixel / 8));
+	*(unsigned int *)dest = color;
 }

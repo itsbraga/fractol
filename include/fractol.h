@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fractol.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: art3mis <art3mis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: annabrag <annabrag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 16:15:48 by annabrag          #+#    #+#             */
-/*   Updated: 2024/03/11 23:43:11 by art3mis          ###   ########.fr       */
+/*   Updated: 2024/03/12 19:03:43 by annabrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,10 @@ typedef	struct	s_fdata
 	void	*win;
 	t_img	img;
 	char	*kind;
+	double	max_iteration;
 	double	zoom;
+	int		x;
+	int		y;
 }				t_fdata;
 
 /************************************************************************/
@@ -80,7 +83,17 @@ typedef	struct	s_fdata
 /*																		*/
 /************************************************************************/
 
-void    destroy_win(t_fdata *fractal);
-void    destroy_img(t_fdata *fractal);
+void		init_mlx(t_fdata *fractal);
+void		init_img(t_fdata *fractal);
+void    	destroy_win(t_fdata *fractal);
+void    	destroy_img(t_fdata *fractal);
+void    	pixel_put(t_img *img, t_fdata *fractal, int color);
+double		scale(double old_max, double new_max, double n, double new_min);
+
+t_complex	z_square(t_complex z);
+t_complex	sum(t_complex z, t_complex c);
+
+void		init_fractal(t_fdata *fractal);
+void		init_complex(t_complex nbr);
 
 #endif
