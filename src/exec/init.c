@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: annabrag <annabrag@student.42.fr>          +#+  +:+       +#+        */
+/*   By: art3mis <art3mis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:07:06 by annabrag          #+#    #+#             */
-/*   Updated: 2024/03/12 18:14:58 by annabrag         ###   ########.fr       */
+/*   Updated: 2024/03/12 23:31:24 by art3mis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	init_img(t_fdata *fractal)
 
 void	init_mlx(t_fdata *fractal)
 {
-
 	init_img(fractal);
 	fractal->mlx_co = mlx_init();
 	if (!fractal->mlx_co)
@@ -44,11 +43,11 @@ void	init_mlx(t_fdata *fractal)
 			&fractal->img.endian);
 }
 
-void	init_complex(t_complex nbr)
-{
-	nbr.real = 0.0;
-	nbr.imagin = 0.0;
-}
+// void	init_complex(t_complex nbr)
+// {
+// 	nbr.real = 0.0;
+// 	nbr.imagin = 0.0;
+// }
 
 void	init_fractal(t_fdata *fractal)
 {

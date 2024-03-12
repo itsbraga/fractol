@@ -3,32 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   check_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: annabrag <annabrag@student.42.fr>          +#+  +:+       +#+        */
+/*   By: art3mis <art3mis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 18:50:28 by annabrag          #+#    #+#             */
-/*   Updated: 2024/03/12 19:02:12 by annabrag         ###   ########.fr       */
+/*   Updated: 2024/03/12 23:26:14 by art3mis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/fractol.h"
 
-// adapter pour le projet (check nb apres , ou .)
-// grosso modo, les doublons de symboles autres que chiffres
-static bool	is_only_double(char *s)
+bool	is_only_double(char *s)
 {
-	int	i;
+	int		i;
+	bool	has_decimal;
 
 	i = 0;
-    if (s[i] == '-')
-        i++;
-	while (s[i] && ft_isdigit(s[i]))
+	has_decimal = false;
+	if (s[i] == '-' && s[i + 1])
 		i++;
-	if (s[i] && !(s[i] == '.' || s[i] == ','))
-		return (false);
+	while (s[i] && (ft_isdigit(s[i]) || s[i] == '.' || s[i] == ','))
+	{
+		if (s[i] == '.' || s[i] == ',')
+		{
+			if (has_decimal == true)
+				return (false);
+			else
+				has_decimal = true;
+		}
+		i++;
+	}
 	return (true);
 }
 
-static bool have_duplicates(char *s)
+bool	have_duplicates(char *s)
 {
     int i;
 	int	j;
@@ -74,7 +81,7 @@ double	atod(char *s)
 	i = 0;
 	sign = 1;
 	first = 0;
-	while (s[i] && s[i] == 32 || (s[i] >= 9 && s[i] <= 13))
+	while (s[i] == 32 || (s[i] >= 9 && s[i] <= 13))
 		i++;
 	if (s[i] == '-' || s[i] == '+')
 	{

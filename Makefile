@@ -31,9 +31,11 @@ NAME		=	fractol
 # NAME_BONUS	=	fractol_bonus
 
 LIBFT_PATH	=	libft/
-LIBFT_X		=	$(addprefix $(LIBFT_PATH), libft.a)
+# LIBFT_X		=	$(addprefix $(LIBFT_PATH), libft.a)
+LIBFT_X		=	libft/libft.a
 MLX_PATH	=	minilibx-linux/
-MLX_X		=	$(addprefix $(MLX_PATH), libmlx.a)
+# MLX_X		=	$(addprefix $(MLX_PATH), libmlx.a)
+MLX_X		=	minilibx-linux/libmlx.a
 
 CC			=	cc
 
@@ -58,7 +60,7 @@ EXEC_DIR		=	exec/
 EXEC_FILES		=	check_args.c init.c main.c
 
 FRACTAL_DIR		=	fractals/
-FRACTAL_FILES	=	mandelbrot.c julia.c formula.c
+FRACTAL_FILES	=	formula.c
 
 # BONUS_FILES	=	
 
@@ -116,13 +118,14 @@ build:
 		@make -sC $(MLX_PATH) $(MAKEFLAGS)
 		@printf "\n\n. ⋅ ˚̣- : ✧ : – ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ₊° ˗ ˏ ˋ ♡ ˎˊ ˗ °₊ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ – : ✧ : -˚̣⋅ .\n\n"
 		@make -sC $(LIBFT_PATH) $(MAKEFLAGS)
-		@make all
+
+all:	$(NAME)
 
 $(NAME): $(OBJS)
 			@printf "\n\n"
 			@printf "$(RESET)$(shell bash rainbow.sh "[FRACT-OL Mandatory]"): "
 			@printf "$(RESET)$(BOLD)$(PINK)Compilation done!\n\n$(RESET)"
-			@if [ ! -f .build ]; then \
+#			@if [ ! -f .build ]; then \
 				printf "\t\t%s\n" \
 				"░░░░░░░░░░░░░░░▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄░░░░░░░░░░░░░░" \
 				"░░░░░░░░▄▄▄▄█▀▀▀░░░░░░░░░░░░▀▀██░░░░░░░░░░░░" \
@@ -143,16 +146,14 @@ $(NAME): $(OBJS)
 				"▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀"; \
 				printf "\n\n"; \
 				touch .build; fi
-			@$(CC) $(CFLAGS) $(OBJS) -I $(LIBFT_X) -I $(MLX_X) $(MLXFLAGS) -o $(NAME)
+			@$(CC) $(CFLAGS) $(OBJS) -I $(LIBFT_X) -I $(MLX_X) $(MLXFLAGS) -L/usr/lib -o $(NAME)
 			@printf "$(RESET)$(shell bash rainbow.sh "You can now generate fractals") 🌈\n\n"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 				@mkdir -p $(dir $@)
 				@printf "$(BOLD)$(ITAL)$(PURPLE)Compiling: $(RESET)$(ITAL)$<          \r"
-				@$(CC) $(DEPFLAGS) $(CFLAGS) -c $< -o $@
+				@$(CC) $(DEPFLAGS) $(CFLAGS) -I/usr/include -Iminilibx-linux -c $< -o $@
 -include $(DEPS)
-
-all:	$(NAME)
 
 clean:
 		@$(RM) $(OBJ_DIR)
@@ -168,7 +169,7 @@ fclean: clean
 			@printf "$(BOLD)$(BLUE)[execs]: $(RESET)Full clean completed!\n\n"
 			@printf "\n. ⋅ ˚̣- : ✧ : – ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ₊° ˗ ˏ ˋ ♡ ˎˊ ˗ °₊ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ – : ✧ : -˚̣⋅ .\n\n\n"
 
-re:		fclean all
+re:		fclean build all
 			@printf "\n\n✨ $(BOLD)$(YELLOW)Cleaning and rebuilding done! $(RESET)✨\n\n"
 
 diff:
@@ -209,4 +210,4 @@ norm:
 # 		@printf "\n\n✨ $(BOLD)$(YELLOW)Bonuses successfully compiled! $(RESET)✨\n"
 
 
-.PHONY:		build all clean fclean re diff norm
+.PHONY:		all build clean fclean re diff norm

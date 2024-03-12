@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fractol.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: annabrag <annabrag@student.42.fr>          +#+  +:+       +#+        */
+/*   By: art3mis <art3mis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 16:15:48 by annabrag          #+#    #+#             */
-/*   Updated: 2024/03/12 19:03:43 by annabrag         ###   ########.fr       */
+/*   Updated: 2024/03/12 23:36:12 by art3mis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include "../libft/include/ft_printf.h"
 
 # include "../minilibx-linux/mlx.h"
+
 # include "X11/X.h"
 # include "X11/keysym.h"
 # include <math.h>
@@ -94,6 +95,6 @@ t_complex	z_square(t_complex z);
 t_complex	sum(t_complex z, t_complex c);
 
 void		init_fractal(t_fdata *fractal);
-void		init_complex(t_complex nbr);
+// void		init_complex(t_complex nbr);
 
 #endif
