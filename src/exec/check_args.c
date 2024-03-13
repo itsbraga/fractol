@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: art3mis <art3mis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: annabrag <annabrag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 18:50:28 by annabrag          #+#    #+#             */
-/*   Updated: 2024/03/12 23:26:14 by art3mis          ###   ########.fr       */
+/*   Updated: 2024/03/13 14:48:21 by annabrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,12 @@ bool	have_duplicates(char *s)
 
 static double	atod_part2(char *s, int i)
 {
-	int		j;
 	double	second;
 
-	j = 1;
 	second = 0;
 	while (s[i] && (s[i] >= 48 && s[i] <= 57))
 	{
-		j /= 10;
-		second = second * 10 + (s[i] - 48) * j;
+		second = second / 10 + (s[i] - 48);
 		i++;
 	}
 	return (second);

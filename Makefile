@@ -31,10 +31,10 @@ NAME		=	fractol
 # NAME_BONUS	=	fractol_bonus
 
 LIBFT_PATH	=	libft/
-# LIBFT_X		=	$(addprefix $(LIBFT_PATH), libft.a)
+#LIBFT_X		=	$(addprefix $(LIBFT_PATH), libft.a)
 LIBFT_X		=	libft/libft.a
 MLX_PATH	=	minilibx-linux/
-# MLX_X		=	$(addprefix $(MLX_PATH), libmlx.a)
+#MLX_X		=	$(addprefix $(MLX_PATH), libmlx.a)
 MLX_X		=	minilibx-linux/libmlx.a
 
 CC			=	cc
@@ -114,18 +114,18 @@ DEPS		=	$(addprefix $(OBJ_DIR), $(DEP_NAMES))
 #																				#
 #################################################################################
 
-build:
-		@make -sC $(MLX_PATH) $(MAKEFLAGS)
-		@printf "\n\n. ⋅ ˚̣- : ✧ : – ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ₊° ˗ ˏ ˋ ♡ ˎˊ ˗ °₊ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ – : ✧ : -˚̣⋅ .\n\n"
-		@make -sC $(LIBFT_PATH) $(MAKEFLAGS)
-
-all:	$(NAME)
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+				@mkdir -p $(dir $@)
+				@printf "$(BOLD)$(ITAL)$(PURPLE)Compiling: $(RESET)$(ITAL)$<          \r"
+				@$(CC) $(DEPFLAGS) $(CFLAGS) -c $< -o $@
+-include $(DEPS)
 
 $(NAME): $(OBJS)
+			@make -sC $(MLX_PATH) $(MAKEFLAGS)
+			@printf "\n\n. ⋅ ˚̣- : ✧ : – ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ₊° ˗ ˏ ˋ ♡ ˎˊ ˗ °₊ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ – : ✧ : -˚̣⋅ .\n\n"
+			@make -sC $(LIBFT_PATH) $(MAKEFLAGS)
 			@printf "\n\n"
-			@printf "$(RESET)$(shell bash rainbow.sh "[FRACT-OL Mandatory]"): "
-			@printf "$(RESET)$(BOLD)$(PINK)Compilation done!\n\n$(RESET)"
-#			@if [ ! -f .build ]; then \
+			@if [ ! -f .build ]; then \
 				printf "\t\t%s\n" \
 				"░░░░░░░░░░░░░░░▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄░░░░░░░░░░░░░░" \
 				"░░░░░░░░▄▄▄▄█▀▀▀░░░░░░░░░░░░▀▀██░░░░░░░░░░░░" \
@@ -146,14 +146,12 @@ $(NAME): $(OBJS)
 				"▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀"; \
 				printf "\n\n"; \
 				touch .build; fi
-			@$(CC) $(CFLAGS) $(OBJS) -I $(LIBFT_X) -I $(MLX_X) $(MLXFLAGS) -L/usr/lib -o $(NAME)
+			@printf "$(RESET)$(shell bash rainbow.sh "[FRACT-OL Mandatory]"): "
+			@printf "$(RESET)$(BOLD)$(PINK)Compilation done!\n\n$(RESET)"
+			@$(CC) $(CFLAGS) $(OBJS) -Inc $(LIBFT_X) -Inc $(MLX_X) $(MLXFLAGS) -o $(NAME)
 			@printf "$(RESET)$(shell bash rainbow.sh "You can now generate fractals") 🌈\n\n"
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c
-				@mkdir -p $(dir $@)
-				@printf "$(BOLD)$(ITAL)$(PURPLE)Compiling: $(RESET)$(ITAL)$<          \r"
-				@$(CC) $(DEPFLAGS) $(CFLAGS) -I/usr/include -Iminilibx-linux -c $< -o $@
--include $(DEPS)
+all:	$(NAME)
 
 clean:
 		@$(RM) $(OBJ_DIR)
