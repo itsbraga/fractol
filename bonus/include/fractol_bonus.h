@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fractol.h                                          :+:      :+:    :+:   */
+/*   fractol_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: annabrag <annabrag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 16:15:48 by annabrag          #+#    #+#             */
-/*   Updated: 2024/03/14 17:31:46 by annabrag         ###   ########.fr       */
+/*   Updated: 2024/03/14 17:22:08 by annabrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FRACTOL_H
-# define FRACTOL_H
+#ifndef FRACTOL_BONUS_H
+# define FRACTOL_BONUS_H
 
 /******************************************************************************\
  * LIBRAIRIES
 \******************************************************************************/
 
-# include "../libft/include/libft.h"
-# include "../libft/include/ft_printf.h"
-# include "defines.h"
+# include "../../libft/include/libft.h"
+# include "../../libft/include/ft_printf.h"
+# include "defines_bonus.h"
 
-# include "../mlx/mlx.h"
+# include "../../mlx/mlx.h"
 
 # include "X11/X.h"
 # include "X11/keysym.h"
@@ -60,11 +60,11 @@ typedef struct	s_complex
 	double	imagin;
 }				t_complex;
 
-typedef struct s_index
+typedef struct	s_index
 {
 	int		x;
 	int		y;
-}			t_index;
+}				t_index;
 
 typedef	struct	s_fdata
 {
@@ -75,8 +75,6 @@ typedef	struct	s_fdata
 	double	max_iter;
 	double	zoom;
 	t_index	i;
-	double	j_real;
-	double	j_imagin;
 }				t_fdata;
 
 /******************************************************************************\
@@ -94,7 +92,7 @@ void		put_pixel_in_img(t_img *img, t_fdata *fractal, int color);
 
 double		scale(double old_max, double new_max, double n, double new_min);
 
-t_complex	z_sqrt(t_complex z);
+t_complex	z_square(t_complex z);
 t_complex	sum(t_complex z, t_complex c);
 
 double		atod(char *s);

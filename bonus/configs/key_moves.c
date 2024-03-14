@@ -1,19 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   key_moves.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: annabrag <annabrag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/06 05:12:58 by annabrag          #+#    #+#             */
-/*   Updated: 2024/03/12 18:15:07 by annabrag         ###   ########.fr       */
+/*   Created: 2024/03/14 16:26:07 by annabrag          #+#    #+#             */
+/*   Updated: 2024/03/14 16:58:34 by annabrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/fractol.h"
+#include "../include/fractol_bonus.h"
 
-int	main(int argc, char **argv)
-{
-	(void)argc;
-	(void)argv;
-}
+// int key_hook(int keycode, t_fdata *fractal)
+// {
+// 	//printf("touche echap: %d\n", keycode);
+//     if (keycode == XK_Escape)
+//         handle_close(fractal);
+// 	else if (keycode == KEY_UP)
+// 		;
+// 	else if (keycode == KEY_DOWN)
+// 		;
+// 	else if (keycode == KEY_LEFT)
+// 		;
+// 	else if (keycode == KEY_RIGHT)
+//     return (EXIT_SUCCESS);
+// }

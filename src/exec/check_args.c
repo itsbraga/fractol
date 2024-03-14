@@ -6,7 +6,7 @@
 /*   By: annabrag <annabrag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 18:50:28 by annabrag          #+#    #+#             */
-/*   Updated: 2024/03/13 14:48:21 by annabrag         ###   ########.fr       */
+/*   Updated: 2024/03/14 14:19:28 by annabrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,44 +55,22 @@ bool	have_duplicates(char *s)
 	return (true);
 }
 
-static double	atod_part2(char *s, int i)
+bool	global_check_successful(char **argv)
 {
-	double	second;
-
-	second = 0;
-	while (s[i] && (s[i] >= 48 && s[i] <= 57))
-	{
-		second = second / 10 + (s[i] - 48);
-		i++;
-	}
-	return (second);
-}
-
-double	atod(char *s)
-{
-	int		i;
-	int		sign;
-	double	first;
-	double	second;
+	int	i;
 
 	i = 0;
-	sign = 1;
-	first = 0;
-	while (s[i] == 32 || (s[i] >= 9 && s[i] <= 13))
-		i++;
-	if (s[i] == '-' || s[i] == '+')
+	while (argv[i])
 	{
-		if (s[i] == '-')
-			sign *= -1;
+		if (!is_only_double(argv[i]))
+		{
+			write(STDERR_FILENO, "Error: Invalid argument.\n", 6);
+			return (false);
+		}
 		i++;
 	}
-	while (s[i] && (s[i] >= 48 && s[i] <= 57))
-	{
-		first = first * 10 + (s[i] - 48);
-		i++;
-	}
-	if (s[i] == '.' || s[i] == ',')
-		i++;
-	second = atod_part2(s, i);
-	return (sign * (first + second));
+	if (have_duplicates(argv) == true)
+		return (write(STDERR_FILENO, "Error: Contains duplicates.\n", 6), false);
+	return (true);
 }
+

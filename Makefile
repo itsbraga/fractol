@@ -31,16 +31,14 @@ NAME		=	fractol
 # NAME_BONUS	=	fractol_bonus
 
 LIBFT_PATH	=	libft/
-#LIBFT_X		=	$(addprefix $(LIBFT_PATH), libft.a)
-LIBFT_X		=	libft/libft.a
-MLX_PATH	=	minilibx-linux/
-#MLX_X		=	$(addprefix $(MLX_PATH), libmlx.a)
-MLX_X		=	minilibx-linux/libmlx.a
+LIBFT_X		=	$(addprefix $(LIBFT_PATH), libft.a)
+MLX_PATH	=	mlx/
+MLX_X		=	$(addprefix $(MLX_PATH), libmlx.a)
 
 CC			=	cc
 
 CFLAGS		=	-Wall -Wextra -Werror
-MLXFLAGS	=	-Lminilibx-linux -lX11 -lXext
+MLXFLAGS	=	-Lmlx -lX11 -lXext
 DEPFLAGS	=	-MMD -MP
 MAKEFLAGS	+=	--no-print-directory
 
@@ -54,13 +52,13 @@ RM			=	rm -rf
 #################################################################################
 
 CONFIGS_DIR		=	configs/
-CONFIGS_FILES	=	pixels.c mlx_handler.c
+CONFIGS_FILES	=	pixels.c mlx_exit.c mlx_hooks.c
 
 EXEC_DIR		=	exec/
-EXEC_FILES		=	check_args.c init.c main.c
+EXEC_FILES		=	check_args.c parse_args.c init.c
 
 FRACTAL_DIR		=	fractals/
-FRACTAL_FILES	=	formula.c
+FRACTAL_FILES	=	formula.c fractals.c
 
 # BONUS_FILES	=	
 
@@ -77,7 +75,8 @@ SRC_DIR		=	src/
 
 SRCS		=	$(addprefix $(CONFIGS_DIR), $(CONFIGS_FILES)) \
 				$(addprefix $(EXEC_DIR), $(EXEC_FILES)) \
-				$(addprefix $(FRACTAL_DIR), $(FRACTAL_FILES))
+				$(addprefix $(FRACTAL_DIR), $(FRACTAL_FILES)) \
+				main.c
 
 OBJ_DIR		=	obj/
 
@@ -124,7 +123,7 @@ $(NAME): $(OBJS)
 			@make -sC $(MLX_PATH) $(MAKEFLAGS)
 			@printf "\n\n. ⋅ ˚̣- : ✧ : – ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ₊° ˗ ˏ ˋ ♡ ˎˊ ˗ °₊ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ ⊹ ⭒ – : ✧ : -˚̣⋅ .\n\n"
 			@make -sC $(LIBFT_PATH) $(MAKEFLAGS)
-			@printf "\n\n"
+			@printf "\n"
 			@if [ ! -f .build ]; then \
 				printf "\t\t%s\n" \
 				"░░░░░░░░░░░░░░░▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄░░░░░░░░░░░░░░" \
