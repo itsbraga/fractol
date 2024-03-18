@@ -37,7 +37,7 @@ MLX_X		=	$(addprefix $(MLX_PATH), libmlx.a)
 
 CC			=	cc
 
-CFLAGS		=	-Wall -Wextra -Werror
+CFLAGS		=	-Wall -Wextra -Werror -g -g3
 MLXFLAGS	=	-Lmlx -lX11 -lXext
 DEPFLAGS	=	-MMD -MP
 MAKEFLAGS	+=	--no-print-directory
@@ -52,13 +52,16 @@ RM			=	rm -rf
 #################################################################################
 
 CONFIGS_DIR		=	configs/
-CONFIGS_FILES	=	pixels.c mlx_exit.c mlx_hooks.c
+CONFIGS_FILES	=	mlx_exit.c mlx_hooks.c
 
 EXEC_DIR		=	exec/
-EXEC_FILES		=	check_args.c parse_args.c init.c
+EXEC_FILES		=	init.c formula.c
 
-FRACTAL_DIR		=	fractals/
-FRACTAL_FILES	=	formula.c fractals.c
+PARSING_DIR		=	parsing/
+PARSING_FILES	=	check_args.c parse_args.c
+
+UTILS_DIR		=	utils/
+UTILS_FILES		=	pixels.c draw.c utils.c
 
 # BONUS_FILES	=	
 
@@ -75,14 +78,16 @@ SRC_DIR		=	src/
 
 SRCS		=	$(addprefix $(CONFIGS_DIR), $(CONFIGS_FILES)) \
 				$(addprefix $(EXEC_DIR), $(EXEC_FILES)) \
-				$(addprefix $(FRACTAL_DIR), $(FRACTAL_FILES)) \
+				$(addprefix $(PARSING_DIR), $(PARSING_FILES)) \
+				$(addprefix $(UTILS_DIR), $(UTILS_FILES)) \
 				main.c
 
 OBJ_DIR		=	obj/
 
 OBJ_NAMES	=	$(SRCS:.c=.o)
 
-OBJ_DIRS	=	$(addprefix $(OBJ_DIR), $(CONFIGS_DIR), $(EXEC_DIR), $(FRACTAL_DIR))
+OBJ_DIRS	=	$(addprefix $(OBJ_DIR), $(CONFIGS_DIR), $(EXEC_DIR), \
+						$(PARSING_DIR), $(UTILS_DIR))
 
 OBJS		=	$(addprefix $(OBJ_DIR), $(OBJ_NAMES))
 
@@ -102,7 +107,8 @@ OBJS		=	$(addprefix $(OBJ_DIR), $(OBJ_NAMES))
 
 DEP_NAMES	=	$(SRCS:.c=.d)
 
-DEP_DIRS	=	$(addprefix $(OBJ_DIR), $(CONFIGS_DIR), $(EXEC_DIR), $(FRACTAL_DIR))
+DEP_DIRS	=	$(addprefix $(OBJ_DIR), $(CONFIGS_DIR), $(EXEC_DIR), \
+						$(PARSING_DIR), $(UTILS_DIR))
 
 DEPS		=	$(addprefix $(OBJ_DIR), $(DEP_NAMES))
 

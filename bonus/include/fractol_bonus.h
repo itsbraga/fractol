@@ -6,7 +6,7 @@
 /*   By: annabrag <annabrag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 16:15:48 by annabrag          #+#    #+#             */
-/*   Updated: 2024/03/14 17:22:08 by annabrag         ###   ########.fr       */
+/*   Updated: 2024/03/17 21:08:19 by annabrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,20 +75,20 @@ typedef	struct	s_fdata
 	double	max_iter;
 	double	zoom;
 	t_index	i;
-}				t_fdata;
+}				t_data;
 
 /******************************************************************************\
  * FUNCTIONS
 \******************************************************************************/
 
-void		init_mlx(t_fdata *fractal);
-void		init_img(t_fdata *fractal);
-void    	del_win(t_fdata *fractal);
-void    	del_img(t_fdata *fractal);
-void		del_display(t_fdata *fractal);
-int			key_hook(int keycode, t_fdata *fractal);
-int			mouse_hook(int keycode, t_fdata *fractal);
-void		put_pixel_in_img(t_img *img, t_fdata *fractal, int color);
+void		init_mlx(t_data *fractal);
+void		init_img(t_data *fractal);
+void    	del_win(t_data *fractal);
+void    	del_img(t_data *fractal);
+void		del_display(t_data *fractal);
+int			key_hook(int keycode, t_data *fractal);
+int			mouse_hook(int keycode, t_data *fractal);
+void		put_pixel_in_img(t_img *img, t_data *fractal, int color);
 
 double		scale(double old_max, double new_max, double n, double new_min);
 
@@ -97,8 +97,8 @@ t_complex	sum(t_complex z, t_complex c);
 
 double		atod(char *s);
 
-void		init_fractal(t_fdata *fractal);
-void		draw(t_fdata *fractal);
+void		init_fractal(t_data *fractal);
+void		draw(t_data *fractal);
 void		init_complex(t_complex nbr);
 
 #endif

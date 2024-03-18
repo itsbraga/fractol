@@ -6,52 +6,46 @@
 /*   By: annabrag <annabrag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:55:00 by annabrag          #+#    #+#             */
-/*   Updated: 2024/03/14 17:36:51 by annabrag         ###   ########.fr       */
+/*   Updated: 2024/03/18 00:07:44 by annabrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/fractol.h"
 
-void    put_pixels_in_img(t_img *img, t_fdata *fractal, int color)
+int    put_pixels_in_img(t_img *img, t_data *fractal, int n, int color)
 {
-	char	*res;
+	char	*buffer;
 
+	(void)n;
 	if (fractal->i.x < 0 || fractal->i.x >= img->line_len || fractal->i.y < 0
 		|| fractal->i.y >= WIN_HEIGHT)
-		return ;
-	res = img->addr + (fractal->i.y * img->line_len + fractal->i.x 
+		return (0);
+	buffer = img->addr + (fractal->i.y * img->line_len + fractal->i.x 
             * (img->bpp / 8));
-	*(unsigned int *)res = color;
+	return (*(unsigned int *)buffer = color);
 }
 
-void	handle_julia(t_fdata *fractal, t_complex *z, t_complex *c)
+void	handle_pixels(t_data *fractal)
 {
-	if (!ft_strncmp(fractal->kind, "julia", 5))
-	{
-		z->real = scale(fractal->i.x, -2, 2, WIN_WIDTH) * fractal->zoom;
-		z->imagin = scale(fractal->i.y, 2, -2, WIN_HEIGHT) * fractal->zoom;
-		c->real = fractal->j_real;
-		c->imagin = fractal->j_imagin;
-	}
-	else
-	{
-		z->real = 0.0;
-		z->imagin = 0.0;
-		c->real = scale(fractal->i.x, -2, 2, WIN_WIDTH) * fractal->zoom;
-		c->imagin = scale(fractal->i.y, 2, -2, WIN_HEIGHT) * fractal->zoom;
-	}
-}
-
-void	handle_pixels(t_fdata *fractal, int color)
-{
-	int			i;
+	int			it;
+	int			color;
 	t_complex	z;
 	t_complex	c;
 	
-	i = 0;
-	while (i < fractal->max_iter)
+	it = 0;
+	create_cplan(fractal, &z, &c);
+	while (it < fractal->max_iter)
 	{
 		z = sum(z_sqrt(z), c);
-		if ((z.real * z.real) + (z.imagin * z.imagin));
+		if (((z.real * z.real) + (z.imagin * z.imagin)) > fractal->esc_val)
+		{
+			color = scale(it, 0xFF5BFF, 0x56F1FF, fractal->max_iter);
+			put_pixels_in_img(&fractal->img, fractal, fractal->i.x, color);
+			put_pixels_in_img(&fractal->img, fractal, fractal->i.y, color);
+			break ;
+		}
+		it++;
 	}
+	put_pixels_in_img(&fractal->img, fractal, fractal->i.x, 0x000000);
+	put_pixels_in_img(&fractal->img, fractal, fractal->i.y, 0x000000);
 }

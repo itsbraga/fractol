@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_mlx.c                                         :+:      :+:    :+:   */
+/*   mlx_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: annabrag <annabrag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:29:29 by annabrag          #+#    #+#             */
-/*   Updated: 2024/03/14 16:18:32 by annabrag         ###   ########.fr       */
+/*   Updated: 2024/03/17 21:12:48 by annabrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/fractol.h"
 
-void    del_win(t_fdata *fractal)
+void    del_win(t_data *fractal)
 {
     mlx_destroy_window(fractal->mlx_co, fractal->win);
 	free(fractal->mlx_co);
@@ -21,7 +21,7 @@ void    del_win(t_fdata *fractal)
 	exit(1);
 }
 
-void    del_img(t_fdata *fractal)
+void    del_img(t_data *fractal)
 {
     mlx_destroy_image(fractal->mlx_co, fractal->img.img_ptr);
     mlx_destroy_window(fractal->mlx_co, fractal->win);
@@ -31,7 +31,7 @@ void    del_img(t_fdata *fractal)
 	exit(1);
 }
 
-void    del_display(t_fdata *fractal)
+int del_display(t_data *fractal)
 {
     mlx_destroy_image(fractal->mlx_co, fractal->img.img_ptr);
     mlx_destroy_window(fractal->mlx_co, fractal->win);

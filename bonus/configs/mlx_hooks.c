@@ -6,13 +6,13 @@
 /*   By: annabrag <annabrag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:02:44 by annabrag          #+#    #+#             */
-/*   Updated: 2024/03/14 16:58:58 by annabrag         ###   ########.fr       */
+/*   Updated: 2024/03/17 21:08:19 by annabrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fractol_bonus.h"
 
-int key_hook(int keycode, t_fdata *fractal)
+int key_hook(int keycode, t_data *fractal)
 {
 	//printf("touche echap: %d\n", keycode);
     if (keycode == XK_Escape)
@@ -20,7 +20,7 @@ int key_hook(int keycode, t_fdata *fractal)
     return (EXIT_SUCCESS);
 }
 
-int mouse_hook(int mousecode, t_fdata *fractal)
+int mouse_hook(int mousecode, t_data *fractal)
 {
     if (mousecode == MOUSE_WHEEL_UP)
     {
@@ -35,7 +35,7 @@ int mouse_hook(int mousecode, t_fdata *fractal)
     return (EXIT_SUCCESS);
 }
 
-void	handle_mlx_hooks(t_fdata *fractal)
+void	handle_mlx_hooks(t_data *fractal)
 {
 	mlx_key_hook(fractal->win, key_hook, fractal);
 	mlx_hook(fractal->win, 04, (1L<<2), mouse_hook, fractal);

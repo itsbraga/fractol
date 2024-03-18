@@ -6,13 +6,13 @@
 /*   By: annabrag <annabrag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:55:00 by annabrag          #+#    #+#             */
-/*   Updated: 2024/03/14 17:22:18 by annabrag         ###   ########.fr       */
+/*   Updated: 2024/03/17 21:08:19 by annabrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fractol_bonus.h"
 
-void    put_pixels_in_img(t_img *img, t_fdata *fractal, int color)
+void    put_pixels_in_img(t_img *img, t_data *fractal, int color)
 {
 	char	*res;
 
@@ -24,4 +24,4 @@ void    put_pixels_in_img(t_img *img, t_fdata *fractal, int color)
 	*(unsigned int *)res = color;
 }
 
-void	handle_pixels(t_img *img, t_fdata *fractal, int color);
+void	handle_pixels(t_img *img, t_data *fractal, int color);

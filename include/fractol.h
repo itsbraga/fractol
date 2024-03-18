@@ -6,7 +6,7 @@
 /*   By: annabrag <annabrag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 16:15:48 by annabrag          #+#    #+#             */
-/*   Updated: 2024/03/14 17:31:46 by annabrag         ###   ########.fr       */
+/*   Updated: 2024/03/17 23:59:21 by annabrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct s_index
 	int		y;
 }			t_index;
 
-typedef	struct	s_fdata
+typedef	struct	s_data
 {
 	void	*mlx_co;
 	void	*win;
@@ -77,30 +77,39 @@ typedef	struct	s_fdata
 	t_index	i;
 	double	j_real;
 	double	j_imagin;
-}				t_fdata;
+	double	esc_val;
+}				t_data;
 
 /******************************************************************************\
  * FUNCTIONS
 \******************************************************************************/
 
-void		init_mlx(t_fdata *fractal);
-void		init_img(t_fdata *fractal);
-void    	del_win(t_fdata *fractal);
-void    	del_img(t_fdata *fractal);
-void		del_display(t_fdata *fractal);
-int			key_hook(int keycode, t_fdata *fractal);
-int			mouse_hook(int keycode, t_fdata *fractal);
-void		put_pixel_in_img(t_img *img, t_fdata *fractal, int color);
+double		atod(char *s);
+bool		global_check_successful(char **argv);
+void		*fmemset_struct(void *s, int c, size_t n);
+void		show_fparams(void);
 
-double		scale(double old_max, double new_max, double n, double new_min);
+void		init_mlx(t_data *fractal);
+void		init_img(t_data *fractal);
+void		init_complex(t_complex nbr);
+void		init_fractal(t_data *fractal);
+void		init_data(t_data *fractal);
+
+void		handle_mlx_hooks(t_data *fractal);
+int			put_pixels_in_img(t_img *img, t_data *fractal, int x, int color);
+void		handle_pixels(t_data *fractal);
+double		scale(double n, double new_min, double new_max, double old_max);
+
+void    	del_win(t_data *fractal);
+void    	del_img(t_data *fractal);
+int			del_display(t_data *fractal);
 
 t_complex	z_sqrt(t_complex z);
 t_complex	sum(t_complex z, t_complex c);
 
-double		atod(char *s);
-
-void		init_fractal(t_fdata *fractal);
-void		draw(t_fdata *fractal);
-void		init_complex(t_complex nbr);
+void		create_cplan(t_data *fractal, t_complex *z, t_complex *c);
+void		draw(t_data *fractal);
+void		mandelbrot(t_data *fractal);
+void		julia(char **argv, t_data *fractal);
 
 #endif
